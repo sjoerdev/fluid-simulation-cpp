@@ -23,11 +23,12 @@
 
 // include
 #include "input.h"
+#include "particle.h"
 
 // other
-int MAX_NEIGHBORS = 10;
-InputState input;
+Input input;
 
+// buffers
 std::vector<std::vector<int>> neighbor_buffer;
 std::vector<float> position_buffer;
 std::vector<float> pressure_buffer;
@@ -58,23 +59,10 @@ float VISC_LAP = 40.f / (glm::pi<float>() * pow(KERNEL_RADIUS, 5.f));
 float BOUNDARY_EPSILON = KERNEL_RADIUS;
 float BOUND_DAMPING = -0.5f;
 
-struct Particle
-{
-    glm::vec2 position;
-    glm::vec2 velocity;
-    glm::vec2 force;
-    float density;
-    float pressure;
+// neighbour constants
+int MAX_NEIGHBORS = 10;
 
-    Particle(float x, float y)
-    {
-        position = glm::vec2(x, y);
-        velocity = glm::vec2(0.f, 0.f);
-        force = glm::vec2(0.f, 0.f);
-        density = 0;
-        pressure = 0.f;
-    }
-};
+
 
 // particles
 std::vector<Particle> particles;
