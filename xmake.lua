@@ -1,9 +1,3 @@
--- dependencies
-add_requires("glm")
-add_requires("glfw")
-add_requires("glad")
-add_requires("tbb")
-
 -- update vscode intellisense
 add_rules("plugin.compile_commands.autoupdate", { outputdir = ".vscode" })
 
@@ -14,11 +8,12 @@ target("project")
     set_kind("binary")
     set_languages("c++17")
 
-    -- sources
-    add_files("src/*.cpp")
+    -- local
+    add_includedirs("include/") -- local headers
+    add_files("src/**.cpp") -- local cpp files
+    add_files("src/**.c") -- local c files
 
-    -- includes
-    add_includedirs("include/")
-
-    -- linking
-    add_packages("glfw", "glad", "glm", "tbb")
+    -- third party
+    add_includedirs("third_party/") -- third party headers
+    add_files("third_party/**.cpp") -- third cpp files
+    add_files("third_party/**.c") -- third c files
