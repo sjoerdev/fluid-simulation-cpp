@@ -8,13 +8,18 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 file(GLOB_RECURSE SOURCES
     src/*.cpp
     src/*.c
-    third_party/*.cpp
-    third_party/*.c
 )
 
 add_executable(project ${SOURCES})
 
 target_include_directories(project PRIVATE
     include
-    third_party
 )
+
+add_subdirectory(deps/glfw)
+add_subdirectory(deps/glm)
+add_subdirectory(deps/tbb)
+
+target_link_libraries(project PRIVATE glfw)
+target_link_libraries(project PRIVATE glm)
+target_link_libraries(project PRIVATE tbb)

@@ -1,3 +1,3 @@
 @echo off
 
-rmdir -r ./build
+rmdir /s /q build
