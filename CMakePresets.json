@@ -23,15 +23,11 @@
         {
             "name": "msvc-default-debug",
             "configurePreset": "msvc-default",
-            "configuration": "Debug"
+            "configuration": "Debug",
+            "jobs": 0
         },
         {
             "name": "msvc-default-release",
-            "configurePreset": "msvc-default",
-            "configuration": "Release"
-        },
-        {
-            "name": "msvc-default-release-parallel",
             "configurePreset": "msvc-default",
             "configuration": "Release",
             "jobs": 0
@@ -39,21 +35,11 @@
         {
             "name": "msvc-ninja-debug",
             "configurePreset": "msvc-ninja",
-            "configuration": "Debug"
-        },
-        {
-            "name": "msvc-ninja-release",
-            "configurePreset": "msvc-ninja",
-            "configuration": "Release"
-        },
-        {
-            "name": "msvc-ninja-debug-parallel",
-            "configurePreset": "msvc-ninja",
             "configuration": "Debug",
             "jobs": 0
         },
         {
-            "name": "msvc-ninja-release-parallel",
+            "name": "msvc-ninja-release",
             "configurePreset": "msvc-ninja",
             "configuration": "Release",
             "jobs": 0
