@@ -7,7 +7,7 @@
 #include <string>
 
 // opengl
-#include <glad/glad.h>
+#include <GL/gl3w.h>
 
 // glfw
 #include <GLFW/glfw3.h>
@@ -450,8 +450,8 @@ int main()
     // set glfw context
     glfwMakeContextCurrent(window);
 
-    // init glad
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) return -1;
+    // init gl3w
+    if (gl3wInit()) return -1;
 
     // init opengl
     glClearColor(0, 0, 0, 1);

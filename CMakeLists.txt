@@ -17,9 +17,11 @@ target_include_directories(project PRIVATE
 )
 
 add_subdirectory(deps/glfw)
+add_subdirectory(deps/gl3w)
 add_subdirectory(deps/glm)
 add_subdirectory(deps/tbb)
 
 target_link_libraries(project PRIVATE glfw)
+target_link_libraries(project PRIVATE gl3w)
 target_link_libraries(project PRIVATE glm)
 target_link_libraries(project PRIVATE tbb)
