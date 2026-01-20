@@ -19,7 +19,32 @@
 #include <glm/gtc/type_ptr.hpp>
 
 // threading
-#include <tbb/parallel_for.h>
+#include <thread>
+
+template<typename T>
+void parallel_for(int begin, int end, T&& func)
+{
+    int thread_count = std::thread::hardware_concurrency();
+    int chunk = (end - begin + thread_count - 1) / thread_count;
+
+    std::vector<std::thread> threads;
+
+    for (int t = 0; t < thread_count; ++t)
+    {
+        int start = begin + t * chunk;
+        int stop = std::min(start + chunk, end);
+
+        if (start >= stop) break;
+
+        auto emplace = [=, &func](){
+            for (int i = start; i < stop; ++i) func(i);
+        };
+
+        threads.emplace_back(emplace);
+    }
+
+    for (auto& thread : threads) thread.join();
+}
 
 // include
 #include "input.h"
@@ -168,7 +193,7 @@ void ComputeDensityPressureMTBF()
 {
     BuildGrid();
 
-    tbb::parallel_for(0, (int)particles.size(), [](int i)
+    parallel_for(0, (int)particles.size(), [](int i)
     {
         Particle& particle_a = particles[i];
         particle_a.density = 0.f;
@@ -188,7 +213,7 @@ void ComputeDensityPressureMTBF()
 
 void ComputeForcesMTBF()
 {
-    tbb::parallel_for(0, (int)particles.size(), [](int i)
+    parallel_for(0, (int)particles.size(), [](int i)
     {
         Particle& particle_a = particles[i];
         glm::vec2 pressure_force(0.f);
@@ -230,7 +255,7 @@ void ComputeForcesMTBF()
 
 void IntegrateMTBF()
 {
-    tbb::parallel_for(0, (int)particles.size(), [](int i)
+    parallel_for(0, (int)particles.size(), [](int i)
     {
         Particle& particle = particles[i];
 
