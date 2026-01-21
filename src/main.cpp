@@ -1,8 +1,8 @@
 #include <vector>
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
+#include <cstdio>
+#include <cstdlib>
+#include <ctime>
 
 #include <GL/gl3w.h>
 #include <GLFW/glfw3.h>
@@ -63,7 +63,7 @@ int WINDOW_HEIGHT = 800;
 
 float RandomValue()
 {
-    return (float)rand() / (float)RAND_MAX;
+    return (float)std::rand() / (float)RAND_MAX;
 }
 
 // grid for spatial hashing
@@ -441,7 +441,7 @@ int main()
 
     // initialize other stuff
     pool.start_pool();
-    srand((unsigned int)time(NULL));
+    std::srand((unsigned int)std::time(NULL));
 
     // init opengl
     glClearColor(0, 0, 0, 1);
