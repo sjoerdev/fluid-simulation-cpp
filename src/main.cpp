@@ -1,24 +1,16 @@
-// std
 #include <vector>
-#include <random>
-#include <chrono>
-#include <algorithm>
-#include <cstring>
-#include <string>
 
-// opengl
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
 #include <GL/gl3w.h>
-
-// glfw
 #include <GLFW/glfw3.h>
-
-// glm
 #include <glm/glm.hpp>
 #include <glm/ext/scalar_constants.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-// include
 #include "input.h"
 #include "particle.h"
 #include "threadpool.h"
@@ -71,10 +63,7 @@ int WINDOW_HEIGHT = 800;
 
 float RandomValue()
 {
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
-    static std::uniform_real_distribution<float> dist(0.0f, 1.0f);
-    return dist(gen);
+    return (float)rand() / (float)RAND_MAX;
 }
 
 // grid for spatial hashing
@@ -450,8 +439,9 @@ int main()
     // init gl3w
     if (gl3wInit()) return -1;
 
-    // initialize thread pool
+    // initialize other stuff
     pool.start_pool();
+    srand((unsigned int)time(NULL));
 
     // init opengl
     glClearColor(0, 0, 0, 1);

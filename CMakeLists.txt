@@ -5,9 +5,12 @@ project(project LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-file(GLOB_RECURSE SOURCES src/*.cpp src/*.c)
-
-add_executable(project ${SOURCES})
+add_executable(project
+    src/main.cpp
+    src/particle.cpp
+    src/input.cpp
+    src/threadpool.cpp
+)
 
 target_include_directories(project PRIVATE include)
 
