@@ -95,7 +95,7 @@ void BuildGrid()
     }
 }
 
-inline std::vector<int>& GetNearNeighborsMTBF(Particle& particle, int index)
+inline std::vector<int>& GetNearNeighbors(Particle& particle, int index)
 {
     auto& neighbors = neighbor_buffer[index];
     neighbors.clear();
@@ -150,7 +150,7 @@ void ResetParticles()
     particles.shrink_to_fit();
 }
 
-void ComputeDensityPressureMTBF()
+void ComputeDensityPressure()
 {
     BuildGrid();
 
@@ -159,7 +159,7 @@ void ComputeDensityPressureMTBF()
         Particle& particle_a = particles[i];
         particle_a.density = 0.f;
 
-        auto& neighbors = GetNearNeighborsMTBF(particle_a, i);
+        auto& neighbors = GetNearNeighbors(particle_a, i);
         for (int j : neighbors)
         {
             Particle& particle_b = particles[j];
@@ -172,7 +172,7 @@ void ComputeDensityPressureMTBF()
     });
 }
 
-void ComputeForcesMTBF()
+void ComputeForces()
 {
     pool.parallel_for(0, (int)particles.size(), [](int i)
     {
@@ -214,7 +214,7 @@ void ComputeForcesMTBF()
     });
 }
 
-void IntegrateMTBF()
+void Integrate()
 {
     pool.parallel_for(0, (int)particles.size(), [](int i)
     {
@@ -248,14 +248,14 @@ void IntegrateMTBF()
     });
 }
 
-void UpdateMTBF()
+void UpdateSimulation()
 {
-    ComputeDensityPressureMTBF();
-    ComputeForcesMTBF();
-    IntegrateMTBF();
+    ComputeDensityPressure();
+    ComputeForces();
+    Integrate();
 }
 
-void RenderMTBF()
+void RenderSimulation()
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -468,8 +468,8 @@ int main()
         if (input.IsKeyDownThisFrame(GLFW_KEY_SPACE)) SpawnParticles();
         if (input.IsKeyDownThisFrame(GLFW_KEY_R)) ResetParticles();
 
-        UpdateMTBF();
-        RenderMTBF();
+        UpdateSimulation();
+        RenderSimulation();
 
         glfwSwapBuffers(window);
         glfwPollEvents();
